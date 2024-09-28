@@ -28,16 +28,34 @@ def add_game(data, map_name, sponsor, result, kills, deaths, assists):
 
 
 def calculate_stats(data):
-    print("\nPerformance du joueur :")
+    print("\nPerformance par map et sponsor :")
     for key, stats in data.items():
         winrate = (stats["wins"] / stats["games"]) * 100 if stats["games"] > 0 else 0
         kda = f"{stats['kills']}/{stats['deaths']}/{stats['assists']}"
         print(f"Map-Sponsor: {key}, Winrate: {winrate:.2f}%, KDA: {kda}, Parties jouées: {stats['games']}")
 
 
+def calculate_global_kda(data):
+    total_kills, total_deaths, total_assists, total_games = 0, 0, 0, 0
+
+    for stats in data.values():
+        total_kills += stats['kills']
+        total_deaths += stats['deaths']
+        total_assists += stats['assists']
+        total_games += stats['games']
+
+    if total_games > 0:
+        avg_kills = total_kills / total_games
+        avg_deaths = total_deaths / total_games
+        avg_assists = total_assists / total_games
+        print(f"\nRatio moyen sur toutes les parties (K/D/A) : {avg_kills:.2f}/{avg_deaths:.2f}/{avg_assists:.2f}")
+    else:
+        print("\nAucune partie enregistrée.")
+
+
 def input_new_game():
-    maps = ["Mill", "Commons", "Metro", "Skyway"]
-    sponsors = ["Pinnacle", "Morrgen", "Bloom", "Ryker", "Vector", "Ghost", "Muu", "Umbra"]
+    maps = ["mill", "commons", "metro", "skyway"]
+    sponsors = ["Pinnacle", "morgen", "bloom", "ryke", "vector", "ghost", "muu", "umbra"]
 
     print("\nChoisissez une map :")
     for i, map_name in enumerate(maps, 1):
@@ -56,7 +74,7 @@ def input_new_game():
         result = input("Résultat invalide. Entrez 'win' ou 'lose' : ").strip().lower()
 
     kills = int(input("Nombre de kills : "))
-    deaths = int(input("Nombre de morts : "))
+    deaths = int(input("Nombre de deaths : "))
     assists = int(input("Nombre d'assists : "))
 
     return map_name, sponsor, result, kills, deaths, assists
@@ -66,10 +84,12 @@ def main():
 
     data = load_data()
     
+
     while True:
         print("\n1. Ajouter une nouvelle partie")
-        print("2. Voir les statistiques actuelles")
-        print("3. Quitter")
+        print("2. Voir les statistiques actuelles (par map et sponsor)")
+        print("3. Voir le ratio moyen sur toutes les parties")
+        print("4. Quitter")
         choice = input("Entrez votre choix : ").strip()
 
         if choice == "1":
@@ -79,6 +99,8 @@ def main():
         elif choice == "2":
             calculate_stats(data)
         elif choice == "3":
+            calculate_global_kda(data)
+        elif choice == "4":
             save_data(data)
             print("Au revoir!")
             break
