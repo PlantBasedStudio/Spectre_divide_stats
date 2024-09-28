@@ -1,0 +1,30 @@
+{
+    "Skyway-Vector": {
+        "wins": 2,
+        "games": 3,
+        "kills": 84,
+        "deaths": 86,
+        "assists": 17
+    },
+    "Mill-Vector": {
+        "wins": 1,
+        "games": 2,
+        "kills": 53,
+        "deaths": 48,
+        "assists": 11
+    },
+    "Commons-Bloom": {
+        "wins": 1,
+        "games": 1,
+        "kills": 20,
+        "deaths": 13,
+        "assists": 2
+    },
+    "Metro-Vector": {
+        "wins": 0,
+        "games": 1,
+        "kills": 11,
+        "deaths": 22,
+        "assists": 9
+    }
+}
